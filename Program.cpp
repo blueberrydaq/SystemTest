@@ -3,31 +3,27 @@
 #include <chrono>
 #include <thread>
 
+#include <gtest/gtest.h>
+
 int main()
+{
+    testing::InitGoogleTest();
+    return RUN_ALL_TESTS();
+}
+
+TEST(Systemtest, FirstTest)
 {
     // Create a fresh Blueberry instance we will use for all the interactions with the Blueberry SDK
     bb::BlueberryInstancePtr instance = bb::BlueberryInstance(MODULE_PATH);
 
-    // Find and connect to a device hosting an OPC UA TMS server
-    //bb::ListPtr<bb::IDeviceInfo> availableDevicesInfo = instance.enumerateAvailableDevices();
+    // Add device by connection string
     bb::DevicePtr device;
-    //for (const bb::DeviceInfoPtr& deviceInfo : availableDevicesInfo)
-    //{
-    //   std::cout << deviceInfo.getConnectionString().toStdString() << std::endl;
-    //   //if (deviceInfo.getConnectionString().toStdString().find("bbref://") != std::string::npos)
-    //   {
-    //      device = instance.addDevice(deviceInfo.getConnectionString());
-    //       break;
-    //   }
-    // }
-
     device = instance.addDevice("bb://127.0.0.1");
 
     // Exit if no device is found
     if (!device.assigned())
     {
         std::cout << "No device simulator found." << std::endl; 
-        return 0;
     }
 
     // Output the name of the added device
@@ -88,9 +84,4 @@ int main()
             amplStep *= -1;
         sineChannel.setPropertyValue("Amplitude", ampl + amplStep);
     }
-
-
-    //std::cout << "Press \"enter\" to exit the application..." << std::endl;
-    //std::cin.get();
-    return 0;
 }
