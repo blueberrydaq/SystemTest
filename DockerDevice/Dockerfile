@@ -5,9 +5,9 @@ FROM ubuntu:22.04
 #RUN echo "Simulator docker started."
 
 # Label about custom image
-#LABEL maintainer=""
-#LABEL version="0.1"
-#LABEL description="Docker image to run a simulated blueberry device for systemtest."
+LABEL maintainer="berryric"
+LABEL version="0.1"
+LABEL description="Docker image to run a simulated blueberry device for systemtest."
 
 # Disable Prompt During Packages Installation
 ARG DEBIAN_FRONTEND=noninteractive
@@ -16,7 +16,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN mkdir /usr/share/Simulator
 
 # copy simulator to docker image
-COPY simulator /usr/share/Simulator
+COPY devicesimulator /usr/share/Simulator
 
 # copy .deb package with bb binaries to docker image
 COPY Blueberry-0.4.0-deb64.deb /usr/share/Simulator
@@ -28,4 +28,4 @@ WORKDIR /usr/share/Simulator
 RUN dpkg -i Blueberry-0.4.0-deb64.deb
 
 # run copied simulator
-CMD ./simulator
+CMD ./devicesimulator

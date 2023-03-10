@@ -9,18 +9,19 @@ int main()
     bb::BlueberryInstancePtr instance = bb::BlueberryInstance(MODULE_PATH);
 
     // Find and connect to a device hosting an OPC UA TMS server
-    bb::ListPtr<bb::IDeviceInfo> availableDevicesInfo = instance.enumerateAvailableDevices();
+    //bb::ListPtr<bb::IDeviceInfo> availableDevicesInfo = instance.enumerateAvailableDevices();
     bb::DevicePtr device;
-    for (const bb::DeviceInfoPtr& deviceInfo : availableDevicesInfo)
-    {
-        std::cout << deviceInfo.getConnectionString().toStdString() << std::endl;
-        //if (deviceInfo.getConnectionString().toStdString().find("bb://127.0.0.1") != std::string::npos)
-        if (deviceInfo.getConnectionString().toStdString().find("bb://127.0.0.1") != std::string::npos)
-        {
-            device = instance.addDevice(deviceInfo.getConnectionString());
-            break;
-        }
-    }
+    //for (const bb::DeviceInfoPtr& deviceInfo : availableDevicesInfo)
+    //{
+    //   std::cout << deviceInfo.getConnectionString().toStdString() << std::endl;
+    //   //if (deviceInfo.getConnectionString().toStdString().find("bbref://") != std::string::npos)
+    //   {
+    //      device = instance.addDevice(deviceInfo.getConnectionString());
+    //       break;
+    //   }
+    // }
+
+    device = instance.addDevice("bb://127.0.0.1");
 
     // Exit if no device is found
     if (!device.assigned())
